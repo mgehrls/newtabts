@@ -2,10 +2,10 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import styles from "./index.module.css";
 import getTime from "../components/getTime"
-//import TodoSec from './components/TodoSec'
-//import Notes from "./components/Notes";
-//import Weather from "./components/Weather";
-//import Time from "./components/Time";
+import TodoSec from '../components/TodoSec'
+import Notes from "../components/Notes";
+import Weather from "../components/Weather";
+import Time from "../components/Time";
 import { useEffect, useState, Fragment } from 'react';
 import { createApi } from "unsplash-js"
 import { useAutoAnimate } from '@formkit/auto-animate/react'
@@ -25,37 +25,23 @@ type Photo = {
     name: string;
   };
 };
-type UnsplashResponse = {
-  type:string,
-  status:number,
-  response: {
-    results: Photo[],
-    total: number,
-    total_pages:number
-  }
-};
-const PhotoComp: React.FC<{ photo: Photo }> = ({ photo }) => {
-  const { user, urls } = photo;
+type WeatherInfo = {
+  name: string,
+  main: {
+    temp:number
+  },
+  weather: WeatherObject[]
+}
+type WeatherObject = {
+  icon:string
+}
 
-  return (
-    <Fragment>
-      <img className="img" src={urls.regular} />
-      <a
-        className="credit"
-        target="_blank"
-        href={`https://unsplash.com/@${user.username}`}
-      >
-        {user.name}
-      </a>
-    </Fragment>
-  );
-};
 
 const Home: NextPage = () => {
   const [photoData, setPhotoData] = useState<any>(null)
   const [showTodo, setShowTodo] = useState(false)
   const [showEditor, setShowEditor] = useState(false)
-  const [weatherInfo, setWeatherInfo] = useState(false)
+  const [weatherInfo, setWeatherInfo] = useState<WeatherInfo | null>(null)
   const [time, setTime] = useState("")
 
   //useEffect(()=>{
@@ -84,7 +70,6 @@ const Home: NextPage = () => {
             setWeatherInfo(data)
           }) 
         .catch(err => console.error(err))
-        .finally(()=> console.log(weatherInfo))
         })
 
 }, [])
@@ -96,14 +81,15 @@ const Home: NextPage = () => {
   
         })  
         .catch(err => console.log(err))
-        .finally(() => console.log(photoData))
   }, [])
 
   const [animationParent] = useAutoAnimate()
-
+  const weatherProps = {
+    weatherInfo: weatherInfo
+  }
   return (
     <div className={"App"  /*ref={animationParent}*/ } >
-      {/*<nav>
+      <nav>
         <i className="fa-regular fa-circle-check todo-icon" onClick={()=>{setShowTodo(!showTodo)}} />
         <i className="fa-solid fa-file-pen notes-icon" onClick={()=>{setShowEditor(!showEditor)}} />
       </nav>
@@ -111,7 +97,7 @@ const Home: NextPage = () => {
       {showTodo && <TodoSec exitTodo={()=> setShowTodo(false)}/>}
       <Time time={time} />
       {showEditor && <Notes exitNotes={()=> setShowEditor(false)} />}
-      {weatherInfo && <Weather weatherInfo={weatherInfo}/>}*/}
+      {weatherProps.weatherInfo !== null && <Weather {...weatherProps}/>}
     </div>
   );
 };
