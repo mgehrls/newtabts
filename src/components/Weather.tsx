@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { env } from "../env/client.mjs"
+import { env } from "../env/server.mjs"
 import { WeatherInfo} from "../utils/types"
 
 
@@ -12,7 +12,7 @@ export default function Weather(){
             const userLat = position.coords.latitude.toFixed(2)
             const userLon = position.coords.longitude.toFixed(2)
             //NEED ENV
-            const weatherAPIkey = "e02944c0d1d98fbccd5ecb3d5676e167"
+            const weatherAPIkey = env.WEATHER_API_KEY
             
             fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${userLat}&lon=${userLon}&appid=${weatherAPIkey}&units=imperial`)
             .then(res => {
