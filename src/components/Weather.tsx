@@ -1,16 +1,5 @@
-interface WeatherProps{
-   weatherInfo: WeatherInfo | null
-}
-type WeatherInfo = {
-    name: string,
-    main: {
-      temp:number
-    },
-    weather: WeatherObject[]
-  }
-  type WeatherObject = {
-    icon:string
-  }
+import { WeatherProps } from "../utils/types"
+
 
 export default function Weather({weatherInfo}: WeatherProps){
     if(weatherInfo!== null && weatherInfo.weather[0] !== undefined){

@@ -1,11 +1,14 @@
-import useHover from "../hooks/useHover"
+
+import { useRef } from 'react'
+import { useHover } from 'usehooks-ts'
 
 const Todo = (props) => {
-    const [hovered, ref] = useHover()
+    const hoverRef = useRef(null)
+    const isHover = useHover(hoverRef)
 
     let classes
 
-    if(hovered){
+    if(isHover){
         classes= "fa-regular fa-square-check"
     }else{
         classes= "fa-regular fa-square-check transparent"
@@ -40,7 +43,7 @@ const Todo = (props) => {
     }
 
     return (
-        <div className="todo-container" ref={ref}>
+        <div className="todo-container" ref={hoverRef}>
             {elementToRender}
             <div className="remove-todo-icon">
                 <i onClick={()=> props.removeTodo(props.todoID)} className={classes} />

@@ -10,10 +10,12 @@
   },
   "dependencies": {
     "@formkit/auto-animate": "^1.0.0-beta.3",
+    "autosize": "^5.0.1",
     "next": "12.2.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "unsplash-js": "^7.0.15",
+    "usehooks-ts": "^2.7.2",
     "zod": "^3.18.0"
   },
   "devDependencies": {

@@ -6,35 +6,15 @@ import TodoSec from '../components/TodoSec'
 import Notes from "../components/Notes";
 import Weather from "../components/Weather";
 import Time from "../components/Time";
-import { useEffect, useState, Fragment } from 'react';
+import { useEffect, useState } from 'react';
 import { createApi } from "unsplash-js"
 import { useAutoAnimate } from '@formkit/auto-animate/react'
+import { TimeObject, WeatherInfo } from "../utils/types";
 
 const api = createApi({
     accessKey: "2GqxttV2wnvK5CUd16C_S7NCKsdmS-l20qr637BKzVo"
 })
 
-type Photo = {
-  id: number;
-  width: number;
-  height: number;
-  urls: { large: string; regular: string; raw: string; small: string };
-  color: string | null;
-  user: {
-    username: string;
-    name: string;
-  };
-};
-type WeatherInfo = {
-  name: string,
-  main: {
-    temp:number
-  },
-  weather: WeatherObject[]
-}
-type WeatherObject = {
-  icon:string
-}
 
 
 const Home: NextPage = () => {
@@ -42,15 +22,15 @@ const Home: NextPage = () => {
   const [showTodo, setShowTodo] = useState(false)
   const [showEditor, setShowEditor] = useState(false)
   const [weatherInfo, setWeatherInfo] = useState<WeatherInfo | null>(null)
-  const [time, setTime] = useState("")
+  const [time, setTime] = useState<TimeObject | null>(null)
 
-  //useEffect(()=>{
-  //  setTime(getTime())
-  //},[])
-//
-  //setInterval(()=>{
-  //    setTime(getTime())
-  //}, 1000)
+  useEffect(()=>{
+    setTime(getTime())
+  },[])
+
+  setInterval(()=>{
+      setTime(getTime())
+  }, 1000)
 
   //gets weather to pass as prop
   useEffect(()=>{
@@ -87,6 +67,9 @@ const Home: NextPage = () => {
   const weatherProps = {
     weatherInfo: weatherInfo
   }
+  const timeProps = {
+    time: time
+  }
   return (
     <div className={"App"  /*ref={animationParent}*/ } >
       <nav>
@@ -95,7 +78,7 @@ const Home: NextPage = () => {
       </nav>
       
       {showTodo && <TodoSec exitTodo={()=> setShowTodo(false)}/>}
-      <Time time={time} />
+      {time !== null && <Time {...timeProps} />}
       {showEditor && <Notes exitNotes={()=> setShowEditor(false)} />}
       {weatherProps.weatherInfo !== null && <Weather {...weatherProps}/>}
     </div>
