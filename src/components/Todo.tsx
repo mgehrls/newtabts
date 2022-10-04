@@ -5,14 +5,9 @@ import { useHover } from 'usehooks-ts'
 const Todo = (props) => {
     const hoverRef = useRef(null)
     const isHover = useHover(hoverRef)
+    let todoClass
 
-    let classes
-
-    if(isHover){
-        classes= "fa-regular fa-square-check"
-    }else{
-        classes= "fa-regular fa-square-check transparent"
-    }
+    isHover ? todoClass= "fa-regular fa-square-check" : todoClass= "fa-regular fa-square-check transparent"
 
 // when to transition to a textarea
     const elementToRender = props.text.length < 25 ? 
@@ -46,7 +41,7 @@ const Todo = (props) => {
         <div className="todo-container" ref={hoverRef}>
             {elementToRender}
             <div className="remove-todo-icon">
-                <i onClick={()=> props.removeTodo(props.todoID)} className={classes} />
+                <i onClick={()=> props.removeTodo(props.todoID)} className={todoClass} />
             </div>
         </div>
     )

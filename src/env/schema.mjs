@@ -7,6 +7,8 @@ import { z } from "zod";
  */
 export const serverSchema = z.object({
   // FOO: z.string(),
+  //WEATHER_API_KEY: z.string(),
+  //UNSPLASH_API_KEY: z.string(),
 });
 
 /**
@@ -16,6 +18,8 @@ export const serverSchema = z.object({
  */
 export const clientSchema = z.object({
   // NEXT_PUBLIC_BAR: z.string(),
+    //WEATHER_API_KEY: z.string(),
+    //UNSPLASH_API_KEY: z.string(),
 });
 
 /**
@@ -26,4 +30,6 @@ export const clientSchema = z.object({
  */
 export const clientEnv = {
   // NEXT_PUBLIC_BAR: process.env.NEXT_PUBLIC_BAR,
+  //UNSPLASH_API_KEY: process.env.UNSPLASH_API_KEY,
+  //WEATHER_API_KEY: process.env.WEATHER_API_KEY,
 };
