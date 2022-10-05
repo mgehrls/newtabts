@@ -1,10 +1,19 @@
 
 import { faSquareCheck } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React from 'react'
 import { useRef } from 'react'
 import { useHover } from 'usehooks-ts'
 
-const Todo = (props) => {
+type todoProps = {
+    updateText: (e: React.ChangeEvent<HTMLInputElement> |React.ChangeEvent<HTMLTextAreaElement>) => void,
+    removeTodo: (id: string)=> void,
+    text: string,
+    todoID: string,
+    addTodo: ()=>void,
+}
+
+const Todo = ({updateText, removeTodo, text, todoID, addTodo}: todoProps) => {
     const hoverRef = useRef(null)
     const isHover = useHover(hoverRef)
     let todoClass
@@ -12,30 +21,30 @@ const Todo = (props) => {
     isHover ? todoClass= "" : todoClass= "transparent"
 
 // when to transition to a textarea
-    const elementToRender = props.text.length < 25 ? 
+    const elementToRender = text.length < 25 ? 
         <input 
             autoFocus
-            onChange={(e)=> props.updateText(e)} 
+            onChange={(e)=> updateText(e)} 
             onKeyDown={(e)=>{
                 if(e.key==="Enter"){
-                    props.addTodo()
+                    addTodo()
                 }
             }} 
             onFocus={(e)=>{
-            const end = props.text.length
+            const end = text.length
             e.target.setSelectionRange(end, end)
             e.target.focus()
             }} 
             className="todo-text-box" 
-            id={props.todoID} type="text" 
-            value={props.text} /> : 
+            id={todoID} type="text" 
+            value={text} /> : 
         <textarea autoFocus onFocus={(e)=>{
-            const end = props.text.length
+            const end = text.length
             e.target.setSelectionRange(end, end)
             e.target.focus()
-        }} className="todo-text-box" id={props.todoID} value={props.text} onChange={(e)=> props.updateText(e)} />
+        }} className="todo-text-box" id={todoID} value={text} onChange={(e)=> updateText(e)} />
 
-    if(props.text.length > 15){
+    if(text.length > 15){
         
     }
 
@@ -46,7 +55,7 @@ const Todo = (props) => {
                 <FontAwesomeIcon 
                     className={todoClass} 
                     icon={faSquareCheck}
-                    onClick={()=> props.removeTodo(props.todoID)}/>
+                    onClick={()=> removeTodo(todoID)}/>
             </div>
         </div>
     )

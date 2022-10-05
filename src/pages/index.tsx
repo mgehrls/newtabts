@@ -6,7 +6,7 @@ import TodoSec from '../components/TodoSec'
 import Notes from "../components/Notes";
 import Weather from "../components/Weather";
 import Time from "../components/Time";
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Fragment } from 'react';
 import { createApi } from "unsplash-js"
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { TimeObject} from "../utils/types";
@@ -42,9 +42,12 @@ const Home: NextPage = () => {
         .getPhotos({query:"nature", orientation:'landscape'})
         .then(result =>{
             setPhotoData(result.response?.results);
+            console.log(result.response?.results)
   
         })  
-        .catch(err => console.log(err))
+        .catch(err => {
+          throw Error(err)
+        })
   }, [])
 
   const [animationParent] = useAutoAnimate()
@@ -52,18 +55,27 @@ const Home: NextPage = () => {
   const timeProps = {
     time: time
   }
+  const todoSecProps = {
+    exitTodo: setShowTodo
+  }
+
   return (
-    <div className="App"  ref={animationParent} >
-      <nav>
-        <FontAwesomeIcon icon={faCircleCheck} onClick={()=>{setShowTodo(!showTodo)}}></FontAwesomeIcon>
-        <FontAwesomeIcon icon={faFilePen} onClick={()=>{setShowEditor(!showEditor)}}></FontAwesomeIcon>
-      </nav>
-      
-      {showTodo && <TodoSec exitTodo={()=> setShowTodo(false)}/>}
-      {time !== null && <Time {...timeProps} />}
-      {showEditor && <Notes exitNotes={()=> setShowEditor(false)} />}
-      <Weather />
-    </div>
+    <>
+      <Head>
+
+      </Head>
+      <div className="App" ref={animationParent} >
+        <nav>
+          <FontAwesomeIcon icon={faCircleCheck} onClick={()=>{setShowTodo(!showTodo)}}/>
+          <FontAwesomeIcon icon={faFilePen} onClick={()=>{setShowEditor(!showEditor)}}/>
+        </nav>
+        {showTodo && <TodoSec {...todoSecProps}/>}
+        {time !== null && <Time {...timeProps} />}
+        {showEditor && <Notes exitNotes={()=> setShowEditor(false)} />}
+        <Weather />
+      </div>
+    
+    </>
   );
 };
 
