@@ -3,6 +3,8 @@ import {useState, useEffect} from 'react'
 import { nanoid } from 'nanoid'
 import autosize from 'autosize'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCirclePlus, faXmark } from '@fortawesome/free-solid-svg-icons'
 
 const TodoSec = (props) => {
 
@@ -52,10 +54,10 @@ const TodoSec = (props) => {
         <div className='todos-container'>
             <div className='todos-controls'>
                 <div className="todos-add-btn" onClick={()=>addTodo()}>
-                    <i className="fa-solid fa-circle-plus"></i>
+                    <FontAwesomeIcon icon={faCirclePlus}/>
                     Add Item
                 </div>
-                <i className="fa-solid fa-xmark pointer" onClick={props.exitTodo} />
+                <FontAwesomeIcon icon={faXmark} className={"pointer"} onClick={props.exitTodo}/>
             </div>
             <p className='todos-title'>Todo List</p>
             <div ref={animationParent} className='todo-list-container'>

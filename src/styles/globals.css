@@ -44,7 +44,7 @@ nav{
   text-align: center;
   top:0;
 }
-nav i{
+nav *{
   cursor: pointer;
   padding:1rem;
   border-radius: 50%;
@@ -54,7 +54,7 @@ nav i{
   margin-left:20px;
   margin-top:20px;
 }
-nav i:hover{
+nav *:hover{
   background-color: var(--main-light-color);
   color:var(--main-dark-color);
   opacity:1;

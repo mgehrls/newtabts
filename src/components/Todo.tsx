@@ -1,4 +1,6 @@
 
+import { faSquareCheck } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useRef } from 'react'
 import { useHover } from 'usehooks-ts'
 
@@ -7,7 +9,7 @@ const Todo = (props) => {
     const isHover = useHover(hoverRef)
     let todoClass
 
-    isHover ? todoClass= "fa-regular fa-square-check" : todoClass= "fa-regular fa-square-check transparent"
+    isHover ? todoClass= "" : todoClass= "transparent"
 
 // when to transition to a textarea
     const elementToRender = props.text.length < 25 ? 
@@ -41,7 +43,10 @@ const Todo = (props) => {
         <div className="todo-container" ref={hoverRef}>
             {elementToRender}
             <div className="remove-todo-icon">
-                <i onClick={()=> props.removeTodo(props.todoID)} className={todoClass} />
+                <FontAwesomeIcon 
+                    className={todoClass} 
+                    icon={faSquareCheck}
+                    onClick={()=> props.removeTodo(props.todoID)}/>
             </div>
         </div>
     )

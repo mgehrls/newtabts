@@ -12,7 +12,7 @@ export default function Weather(){
             const userLat = position.coords.latitude.toFixed(2)
             const userLon = position.coords.longitude.toFixed(2)
             //NEED ENV
-            const weatherAPIkey = env.WEATHER_API_KEY
+            const weatherAPIkey = env.NEXT_PUBLIC_WEATHER_API_KEY
             
             fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${userLat}&lon=${userLon}&appid=${weatherAPIkey}&units=imperial`)
             .then(res => {
@@ -28,6 +28,7 @@ export default function Weather(){
             })
     
     }, [])
+    
     if(weatherInfo !== null && weatherInfo.weather[0] !== undefined){
         return(
             <div className="weather-container">

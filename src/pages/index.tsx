@@ -11,9 +11,11 @@ import { createApi } from "unsplash-js"
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { TimeObject} from "../utils/types";
 import { env } from "../env/client.mjs";
+import { faCircle, faCircleCheck, faFilePen } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const api = createApi({
-    accessKey: "2GqxttV2wnvK5CUd16C_S7NCKsdmS-l20qr637BKzVo"
+    accessKey: env.NEXT_PUBLIC_UNSPLASH_API_KEY
 })
 
 
@@ -51,10 +53,10 @@ const Home: NextPage = () => {
     time: time
   }
   return (
-    <div className={"App"  /*ref={animationParent}*/ } >
+    <div className="App"  ref={animationParent} >
       <nav>
-        <i className="fa-regular fa-circle-check todo-icon" onClick={()=>{setShowTodo(!showTodo)}} />
-        <i className="fa-solid fa-file-pen notes-icon" onClick={()=>{setShowEditor(!showEditor)}} />
+        <FontAwesomeIcon icon={faCircleCheck} onClick={()=>{setShowTodo(!showTodo)}}></FontAwesomeIcon>
+        <FontAwesomeIcon icon={faFilePen} onClick={()=>{setShowEditor(!showEditor)}}></FontAwesomeIcon>
       </nav>
       
       {showTodo && <TodoSec exitTodo={()=> setShowTodo(false)}/>}

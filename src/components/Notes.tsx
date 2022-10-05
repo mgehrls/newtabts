@@ -1,3 +1,5 @@
+import { faXmark } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useEffect, useState } from "react"
     
 export default function Notes(props){
@@ -13,7 +15,7 @@ export default function Notes(props){
     return(
         <div className="notes-container">
             <div className="notes-controls">
-            <i className="fa-solid fa-xmark pointer" onClick={props.exitNotes} />
+            <FontAwesomeIcon icon={faXmark} className={"pointer"} onClick={props.exitNotes}/>
             </div>
             <h2 className="notes-title">Notes</h2>
             <div className="textarea-container">

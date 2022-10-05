@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import { nanoid } from "nanoid"
 import Habit from "./Habit"
+import { faCirclePlus } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 export default function HabitTracker(){
 
@@ -66,7 +68,7 @@ export default function HabitTracker(){
         <div className="habits-container">
             <h1>Habit Tracker</h1>
             <div className="todos-add-btn" onClick={()=>addHabit()}>
-                <i className="fa-solid fa-circle-plus"></i>
+                <FontAwesomeIcon icon={faCirclePlus}/>
                 Add Item
             </div>
             <div>
