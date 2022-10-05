@@ -13,15 +13,17 @@ import { TimeObject} from "../utils/types";
 import { env } from "../env/client.mjs";
 import { faCircle, faCircleCheck, faFilePen } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Photos } from "unsplash-js/dist/methods/search/types/response";
+import { Basic } from "unsplash-js/dist/methods/users/types";
+import { firstPic, Picture } from "../utils/unsplashPictureData";
+import { url } from "inspector";
 
 const api = createApi({
     accessKey: env.NEXT_PUBLIC_UNSPLASH_API_KEY
 })
 
-
-
 const Home: NextPage = () => {
-  const [photoData, setPhotoData] = useState<any>(null)
+  const [backgroundPhoto, setBackgroundPhoto] = useState<Picture>(firstPic)
   const [showTodo, setShowTodo] = useState(false)
   const [showEditor, setShowEditor] = useState(false)
 
@@ -35,14 +37,17 @@ const Home: NextPage = () => {
       setTime(getTime())
   }, 1000)
 
-  //gets weather to pass as prop
-
   useEffect(()=>{
     api.search
         .getPhotos({query:"nature", orientation:'landscape'})
         .then(result =>{
-            setPhotoData(result.response?.results);
-            console.log(result.response?.results)
+          if(result && result.response !== undefined && result.response.results !== undefined){
+            if(result.response.results[4] !== undefined){
+              setBackgroundPhoto(firstPic)
+
+            }
+          }
+            console.log(result.response?.results[4])
   
         })  
         .catch(err => {
@@ -64,7 +69,7 @@ const Home: NextPage = () => {
       <Head>
 
       </Head>
-      <div className="App" ref={animationParent} >
+      <div className="App" ref={animationParent}>
         <nav>
           <FontAwesomeIcon icon={faCircleCheck} onClick={()=>{setShowTodo(!showTodo)}}/>
           <FontAwesomeIcon icon={faFilePen} onClick={()=>{setShowEditor(!showEditor)}}/>
