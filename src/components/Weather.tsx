@@ -1,34 +1,11 @@
 import { useState, useEffect } from "react"
-import { env } from "../env/server.mjs"
 import { WeatherInfo} from "../utils/types"
+type WeatherProps = {
+    weatherInfo: WeatherInfo | null
+}
 
+export default function Weather({weatherInfo}: WeatherProps){
 
-export default function Weather(){
-
-    const [weatherInfo, setWeatherInfo] = useState<WeatherInfo | null>(null)
-
-    useEffect(()=>{
-        navigator.geolocation.getCurrentPosition((position) => {
-            const userLat = position.coords.latitude.toFixed(2)
-            const userLon = position.coords.longitude.toFixed(2)
-            //NEED ENV
-            const weatherAPIkey = env.NEXT_PUBLIC_WEATHER_API_KEY
-            
-            fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${userLat}&lon=${userLon}&appid=${weatherAPIkey}&units=imperial`)
-            .then(res => {
-                if (!res.ok){
-                    throw Error('Weather data not available.')
-                }
-                return res.json()
-            })
-            .then(data => {
-                setWeatherInfo(data)
-              }) 
-            .catch(err => console.error(err))
-            })
-    
-    }, [])
-    
     if(weatherInfo !== null && weatherInfo.weather[0] !== undefined){
         return(
             <div className="weather-container">
